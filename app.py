@@ -7,7 +7,6 @@ import tempfile
 from flask_cors import CORS
 
 app = Flask(__name__)
-
 CORS(app)
 
 @app.route('/extract-text', methods=['POST'])
@@ -42,8 +41,17 @@ def extract_text():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+# 🔁 Simple echo endpoint for testing
+@app.route('/echo-string', methods=['POST'])
+def echo_string():
+    data = request.get_json()
+
+    if not data or 'input' not in data:
+        return jsonify({'error': 'Missing "input" in request body'}), 400
+
+    return jsonify({'output': data['input']})
+
 if __name__ == '__main__':
     # Render requires binding to 0.0.0.0 and using the PORT environment variable
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
-
