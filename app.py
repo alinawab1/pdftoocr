@@ -4,8 +4,11 @@ from pdf2image import convert_from_path
 import base64
 import os
 import tempfile
+from flask_cors import CORS
 
 app = Flask(__name__)
+
+CORS(app)
 
 @app.route('/extract-text', methods=['POST'])
 def extract_text():
