@@ -21,7 +21,7 @@ def extract_text():
         with tempfile.TemporaryDirectory() as tmpdir:
             pdf_path = os.path.join(tmpdir, "uploaded.pdf")
 
-            # Write PDF bytes to file
+            # Write PDF bytes to a file
             with open(pdf_path, 'wb') as f:
                 f.write(pdf_bytes)
 
@@ -39,7 +39,8 @@ def extract_text():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))  # Default to 5000 for local, use PORT from Render
+    # Render requires binding to 0.0.0.0 and using the PORT environment variable
+    port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
+
